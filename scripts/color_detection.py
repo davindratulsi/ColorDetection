@@ -2,6 +2,8 @@
 
 # # Read file
 
-# # Define callback to identify color based on xy coordinates of mouse clicker
+# # Define callback 
 
-# # Determine color from RBG 
+# # Apply edge detection
+
+# # Return geometric characteristics

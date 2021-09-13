@@ -1,3 +1,3 @@
-# ColorDetection
+# EdgeDetection
 
-Project to detect colors in an image using the OpenCV module in Python
+Project to detect shapes using contour/edge detection in an image using the OpenCV module in Python

@@ -1,2 +1,3 @@
 # ColorDetection
-Python project based on https://data-flair.training/blogs/project-in-python-colour-detection/
+
+Project to detect colors in an image using the OpenCV module in Python

@@ -3,36 +3,35 @@ import numpy as np
 import cv2
 
 # # Read file
-image_file = './tests/cat.png'
+image_file = './tests/shapes.png'
 image = cv2.imread(image_file)
 image = cv2.resize(image, (600, 600))
-img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-# # apply binary thresholding
-ret, thresh = cv2.threshold(img_gray, 150, 255, cv2.THRESH_BINARY)
+# # apply thresholding
+threshold = 70
+blocksize = 115
+ret, thresh_basic = cv2.threshold(image_gray, thresh=threshold, maxval=255, type=cv2.THRESH_BINARY)
+thresh_adapt = cv2.adaptiveThreshold(image_gray, maxValue=255,
+                                     adaptiveMethod=cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                     thresholdType=cv2.THRESH_BINARY, blockSize=blocksize,
+                                     C=1)
 
 # # visualize the image
-cv2.imshow('Binary image', image)
+# cv2.imshow('Original image', image)
+# cv2.imshow('Gray image', image_gray)
+# cv2.imshow('Simple binary threshold', thresh_basic)
+cv2.imshow('Adaptive binary threshold', thresh_adapt)
 cv2.waitKey(0)
-# cv2.imwrite('image_thres.jpg', thresh)
 
 # # detect the contours on the binary image
-contours, hierarchy = cv2.findContours(image=thresh, mode=cv2.RETR_TREE,
+contours, hierarchy = cv2.findContours(image=thresh_adapt, mode=cv2.RETR_TREE,
                                         method=cv2.CHAIN_APPROX_SIMPLE)
+
 # # draw contours on the original image
 image_copy = image.copy()
-
-# # # draw contours that match a specified geometric criteria
-# threshold_perimeter = 100
-count = 0
-for i, contour in enumerate(contours):
-    area = cv2.contourArea(contour)
-    perimeter = cv2.arcLength(contour, closed=True)
-    # if area > threshold_area:
-    # if perimeter > threshold_perimeter:
-    count += 1
-    cv2.drawContours(image=image_copy, contours=contour, contourIdx=-1,
-                     color=(255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
+cv2.drawContours(image=image_copy, contours=contours, contourIdx=-1,
+                color=(255, 0, 0), thickness=4, lineType=cv2.LINE_AA)
 
 # see the results
 cv2.imshow('Contours on image', image_copy)

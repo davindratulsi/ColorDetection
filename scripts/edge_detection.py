@@ -8,9 +8,13 @@ image = cv2.imread(image_file)
 image = cv2.resize(image, (600, 600))
 image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
+# # Filter image
+
+
 # # apply thresholding
-threshold = 70
-blocksize = 115
+threshold = 85
+blocksize = 401 # has to be odd
+# if pixel value is greater than threshold, it is assigned a value of 255
 ret, thresh_basic = cv2.threshold(image_gray, thresh=threshold, maxval=255, type=cv2.THRESH_BINARY)
 thresh_adapt = cv2.adaptiveThreshold(image_gray, maxValue=255,
                                      adaptiveMethod=cv2.ADAPTIVE_THRESH_GAUSSIAN_C,

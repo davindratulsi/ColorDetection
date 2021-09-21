@@ -23,19 +23,19 @@ contours, hierarchy = cv2.findContours(image=thresh, mode=cv2.RETR_TREE,
 image_copy = image.copy()
 
 # # # draw contours that match a specified geometric criteria
-threshold_perimeter = 100
+# threshold_perimeter = 100
 count = 0
 for i, contour in enumerate(contours):
     area = cv2.contourArea(contour)
     perimeter = cv2.arcLength(contour, closed=True)
     # if area > threshold_area:
-    if perimeter > threshold_perimeter:
-        count += 1
-        cv2.drawContours(image=image_copy, contours=contour, contourIdx=-1,
-                        color=(255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
+    # if perimeter > threshold_perimeter:
+    count += 1
+    cv2.drawContours(image=image_copy, contours=contour, contourIdx=-1,
+                     color=(255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
 
 # see the results
 cv2.imshow('Contours on image', image_copy)
 cv2.waitKey(0)
-# cv2.imwrite('./tests/image_copy.jpg', image_copy)
-# cv2.destroyAllWindows()
+cv2.imwrite('./tests/image_contours.jpg', image_copy)
+cv2.destroyAllWindows()

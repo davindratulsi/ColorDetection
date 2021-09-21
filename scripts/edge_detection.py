@@ -13,7 +13,7 @@ image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 # # apply thresholding
 threshold = 85
-blocksize = 401 # has to be odd
+blocksize = 241 # has to be odd
 # if pixel value is greater than threshold, it is assigned a value of 255
 ret, thresh_basic = cv2.threshold(image_gray, thresh=threshold, maxval=255, type=cv2.THRESH_BINARY)
 thresh_adapt = cv2.adaptiveThreshold(image_gray, maxValue=255,

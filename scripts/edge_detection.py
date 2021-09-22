@@ -8,8 +8,10 @@ image = cv2.imread(image_file)
 image = cv2.resize(image, (600, 600))
 image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-# # Filter image
-
+# # Filter image, blur and dilate
+image_gray = cv2.GaussianBlur(image_gray, (7, 7), 0)
+kernel = np.ones((11,11), 'uint8')
+image_gray = cv2.dilate(image_gray, kernel, iterations=1)
 
 # # apply thresholding
 threshold = 85
@@ -23,7 +25,7 @@ thresh_adapt = cv2.adaptiveThreshold(image_gray, maxValue=255,
 
 # # visualize the image
 # cv2.imshow('Original image', image)
-# cv2.imshow('Gray image', image_gray)
+cv2.imshow('Gray image', image_gray)
 # cv2.imshow('Simple binary threshold', thresh_basic)
 cv2.imshow('Adaptive binary threshold', thresh_adapt)
 cv2.waitKey(0)
@@ -37,7 +39,7 @@ image_copy = image.copy()
 cv2.drawContours(image=image_copy, contours=contours, contourIdx=-1,
                 color=(255, 0, 0), thickness=4, lineType=cv2.LINE_AA)
 
-# see the results
+# # see the results
 cv2.imshow('Contours on image', image_copy)
 cv2.waitKey(0)
 cv2.imwrite('./tests/image_contours.jpg', image_copy)

@@ -35,11 +35,14 @@ def main():
     contours, hierarchy = cv2.findContours(image=thresh_adapt, mode=cv2.RETR_TREE,
                                             method=cv2.CHAIN_APPROX_SIMPLE)
 
+    # # remove background contour, i.e, one with largest area
+    areas = [cv2.contourArea(contour) for contour in contours]
+    del contours[areas.index(max(areas))]
+
     # # draw contours on the original image
     image_copy = image.copy()
     cv2.drawContours(image=image_copy, contours=contours, contourIdx=-1,
                     color=(255, 0, 0), thickness=4, lineType=cv2.LINE_AA)
-
     # # see the results
     cv2.imshow('Contours on image', image_copy)
     cv2.waitKey(0)
